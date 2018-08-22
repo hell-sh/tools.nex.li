@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>length | tools.nex.li</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<h1>length</h1>
+	<textarea id="length-input" style="min-width:100%;max-width:100%;height:100px" autofocus></textarea>
+	<p><span id="char-counter">0</span> Characters / <span id="word-counter">1</span> Words / <span id="line-counter">1</span> Lines</p>
+	<p>
+		<span data-limit="50">Twitter Display Name</span><br>
+		<span data-limit="55">Ideal Website Title</span><br>
+		<span data-limit="80">Snapchat Message</span><br>
+		<span data-limit="160">Twitter Bio</span><br>
+		<span data-limit="160">SMS</span><br>
+		<span data-limit="280">Tweet</span><br>
+		<span data-limit="300">Reddit Title</span><br>
+		<span data-limit="500">Mastodon &amp; Pinterest Post</span><br>
+		<span data-limit="1024">Netdex Bio</span><br>
+		<span data-limit="2200">Instagram</span><br>
+		<span data-limit="3500">PayPal Transaction Message</span><br>
+		<span data-limit="4000">Walentin Transaction Message</span><br>
+		<span data-limit="5000">Yelp Review</span><br>
+		<span data-limit="63206">Facebook Status</span><br>
+		<span data-limit="400">- Displayed Facebook Status</span><br>
+		<span data-limit="40">- Most Effective Facebook Status</span><br>
+	</p>
+	<p>Copyright (c) 2017-2018, <a href="https://hellsh.com/" target="_blank">Hellsh</a> &middot; <a href="https://hell.sh/privacy" target="_blank">Privacy Policy</a></p>
+	<script src="https://cdn.hell.sh/jquery/3.3.1/slim.js" integrity="sha384-sh6iinGECmk2oNezd0GDVuXqoHrZzF3PTML2nyt/lC61v2p1W7hGll/JkRFCOcMf" crossorigin="anonymous"></script>
+	<script>
+		$("[data-limit]").each(function()
+		{
+			$(this).html($(this).html()+": "+$(this).attr("data-limit")+" Characters").css("transition-property","color").css("transition-duration","1s")
+		});
+		$("#length-input").on("input",function()
+		{
+			var len = this.value.length;
+			$("#char-counter").text(len);
+			$("#word-counter").text(this.value.split(" ").length + this.value.split("\n").length - 1);
+			$("#line-counter").text(this.value.split("\n").length);
+			$("[data-limit]").each(function()
+			{
+				if(len > $(this).attr("data-limit"))
+					$(this).css("color", "darkgreen");
+				else $(this).css("color", "lime")
+			})
+		}).trigger("input")
+	</script>
+</body>
+</html>
