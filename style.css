@@ -1,3 +1,4 @@
-body{font-family:monospace;color:lime;background:#000;color:#fff}
+body{font-family:monospace;background:#000;color:#fff}
 a{color:lime}
-input[type="text"],textarea{background:inherit;color:inherit;font-family:inherit;border:0;outline:0}
+input[type="text"],textarea{background:inherit;color:inherit;font-family:inherit;border:0;width:300px;max-width:100%}
+input[type="text"]:focus,textarea:focus{outline:0}

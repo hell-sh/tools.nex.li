@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>convertip | tools.nex.li</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<h1>convertip</h1>
+	<p>
+		Plain: &nbsp; <input id="plain" type="text" value="127.0.0.1" autofocus><br>
+		Binary:&nbsp; <input id="binary" type="text" value="01111111000000000000000000000001"><br>
+		Decimal: <input id="decimal" type="text" value="2130706433">
+	</p>
+	<p>Copyright (c) 2017-2018, <a href="https://hellsh.com/" target="_blank">Hellsh</a> &middot; <a href="https://hell.sh/privacy" target="_blank">Privacy Policy</a></p>
+	<script>
+		document.getElementById("plain").oninput=function(event)
+		{
+			var arr=document.getElementById("plain").value.split(".");
+			if(arr.length!=4)
+			{
+				document.getElementById("decimal").value="[invalid ip]";
+				return;
+			}
+			var bin="";
+			for(var i=0;i<4;i++)
+			{
+				if(arr[i]<0||arr[i]>255)
+				{
+					document.getElementById("decimal").value="[invalid ip]";
+					return;
+				}
+				var b=dec2bin(arr[i],256);
+				b=b.split("").reverse().join("");
+				while(b.substr(b.length-1)=="0")
+				{
+					b=b.substr(0,b.length-1);
+				}
+				while(b.length<8)
+				{
+					b="0"+b;
+				}
+				bin+=b;
+			}
+			document.getElementById("binary").value=bin;
+			document.getElementById("decimal").value=bin2dec(bin);
+		};
+		document.getElementById("binary").oninput=function(event)
+		{
+			var bin=document.getElementById("binary").value;
+			if(bin.length!=32)
+			{
+				document.getElementById("plain").value="[invalid ip]";
+				document.getElementById("decimal").value="[invalid ip]";
+				return;
+			}
+			document.getElementById("plain").value=bin2dec(bin.substr(0,8))+"."+bin2dec(bin.substr(8,8))+"."+bin2dec(bin.substr(16,8))+"."+bin2dec(bin.substr(24,8));
+			document.getElementById("decimal").value=bin2dec(bin);
+		};
+		document.getElementById("decimal").oninput=function(event)
+		{
+			var dec=document.getElementById("decimal").value;
+			if(isNaN(dec)||dec<0||dec>4294967295)
+			{
+				document.getElementById("plain").value="[invalid ip]";
+				document.getElementById("binary").value="[invalid ip]";
+				return;
+			}
+			var bin=dec2bin(dec,2147483648);
+			document.getElementById("binary").value=bin;
+			document.getElementById("plain").value=bin2dec(bin.substr(0,8))+"."+bin2dec(bin.substr(8,8))+"."+bin2dec(bin.substr(16,8))+"."+bin2dec(bin.substr(24,8));
+		};
+		function dec2bin(dec,limit)
+		{
+			var bin="",m=limit;
+			do
+			{
+				console.log(m);
+				if(dec>=m)
+				{
+					dec-=m;
+					bin+="1";
+				}
+				else
+				{
+					bin+="0";
+				}
+				m/=2;
+			}
+			while(m>=1);
+			return bin;
+		}
+		function bin2dec(bin)
+		{
+			bin=bin.split("").reverse();
+			var m=1,dec=0;
+			for(var i in bin)
+			{
+				if(bin[i]=="1")
+				{
+					dec+=m;
+				}
+				m*=2;
+			}
+			return dec;
+		}
+	</script>
+</body>
+</html>
