@@ -29,17 +29,7 @@
 					document.getElementById("decimal").value="[invalid ip]";
 					return;
 				}
-				var b=dec2bin(arr[i],256);
-				b=b.split("").reverse().join("");
-				while(b.substr(b.length-1)=="0")
-				{
-					b=b.substr(0,b.length-1);
-				}
-				while(b.length<8)
-				{
-					b="0"+b;
-				}
-				bin+=b;
+				bin+=dec2bin(arr[i],128);
 			}
 			document.getElementById("binary").value=bin;
 			document.getElementById("decimal").value=bin2dec(bin);
@@ -74,7 +64,6 @@
 			var bin="",m=limit;
 			do
 			{
-				console.log(m);
 				if(dec>=m)
 				{
 					dec-=m;
